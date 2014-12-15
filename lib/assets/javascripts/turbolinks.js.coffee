@@ -511,6 +511,10 @@ initializeTurbolinks = ->
   bypassOnLoadPopstate ->
     window.addEventListener 'popstate', installHistoryChangeHandler, false
 
+historyStateExternallyChanged = ->
+  rememberCurrentUrl()
+  rememberCurrentState()
+
 # Handle bug in Firefox 26/27 where history.state is initially undefined
 historyStateIsDefined =
   window.history.state != undefined or navigator.userAgent.match /Firefox\/2[6|7]/
@@ -552,6 +556,7 @@ else
   pagesCached,
   enableTransitionCache,
   enableProgressBar,
+  historyStateExternallyChanged,
   allowLinkExtensions: Link.allowExtensions,
   supported: browserSupportsTurbolinks,
   EVENTS: clone(EVENTS)
